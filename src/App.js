@@ -8,13 +8,9 @@ import Sidebar from './components/Sidebar';
 function App() {
   return (
     <div className="App">
-      <div className='flex flex-col'>
-      <div className='flex '>
-      <Sidebar />
-      <Header />
-      </div>
+      {/* <Header /> */}
       <MainRoutes />
-      </div>
+    
  
    </div>
   );

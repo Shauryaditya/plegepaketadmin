@@ -5,7 +5,7 @@ const Header = () => {
   return (
     <div>
       <div className="w-full flex justify-between gap-x-96 p-4 bg-white">
-        <div className="flex justify-center items-center">
+        <div className="flex justify-center items-center ml-80">
         <Searchbar />
         </div>
         
