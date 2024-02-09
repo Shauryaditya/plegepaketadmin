@@ -16,7 +16,7 @@ const Dashboard = () => {
           <div className="bg-white w-64 h-24 rounded p-8"></div>
         </div>
       </div>
-      <div className="ml-64  bg-white rounded-lg p-4">
+      <div className="ml-64  bg-white rounded-lg p-4 max-w-6xl">
         <div className="flex flex-col">
             <div className="flex justify-between pb-8">
                 <h1 className="">Recent Orders</h1>
