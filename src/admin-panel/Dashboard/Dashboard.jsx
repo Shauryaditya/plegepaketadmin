@@ -1,19 +1,47 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Header from "../../components/Header";
+import product from "../../assets/Products.png"
+import orders from "../../assets/Orders.png"
+
 
 const Dashboard = () => {
+  const [products, setProducts] = useState();
+  const fetchProducts = async() =>{
+    const response = await fetch(`${process.env.REACT_APP_URL}/api/v1/get/all-product`)
+    const data = await response.json()
+    setProducts(data.data)
+  }
+  useEffect(() =>{
+    fetchProducts()
+  },[])
+  console.log(products);
   return (
     <div className="w-full bg-gray-100 min-h-screen  relative">
       <Header />
-      <div className="flex justify-between px-4 py-6 ml-72 max-w-4xl">
-        <h1 className="text-sm">
-          <span className="font-bold">Hey Rahul </span>here’s what’s happening
-          with your store today
-        </h1>
-
-        <div className="flex gap-x-6">
-          <div className="bg-white w-64 h-24 rounded p-8"></div>
-          <div className="bg-white w-64 h-24 rounded p-8"></div>
+      <div className="flex justify-end px-4 py-6 ml-72 max-w-4xl gap-x-2">
+        <div className="flex gap-x-6 justify-end">
+          <div className="bg-white w-64 h-24 rounded p-1 ">
+            <div className="flex justify-center gap-x-8">
+              <div className="flex flex-col gap-y-2 my-4">
+                <h1 className="text-sm">PRODUCTS LISTED</h1>
+                <p className="text-lg text-left font-semibold">{products?.length}</p>
+              </div>
+              <div className="py-4">
+              <img src={product} alt="" />
+              </div>
+            </div>
+          </div>
+          <div className="bg-white w-64 h-24 rounded p-1">
+            <div className="flex justify-center gap-x-8">
+              <div className="flex flex-col gap-y-2 my-4">
+                <h1 className="text-sm">TOTAL ORDERS</h1>
+                <p className="text-lg text-left font-semibold">0</p>
+              </div>
+              <div className="py-4">
+              <img src={orders} alt="" />
+              </div>
+            </div>
+          </div>
         </div>
       </div>
       <div className="ml-72  bg-white rounded-lg p-4 max-w-4xl">

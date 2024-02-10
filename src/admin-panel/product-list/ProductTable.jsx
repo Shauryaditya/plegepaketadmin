@@ -1,19 +1,19 @@
 import React from "react";
 
 export const ProductTable = ({ data }) => {
-  const { productName, addedbyId, productType, price, quantity } = data;
+  const { product_name, _id, unit, price, maxNo } = data;
   return (
     <tr class="border-b border-solid border-gray-200 bg-white hover:bg-gray-50 text-[#222222]">
       <td
         scope="row"
         class="whitespace-nowrap px-2 py-2 font-medium text-gray-900"
       >
-        {productName}
+        {product_name}
       </td>
-      <td class="px-2 py-2 capitalize">{addedbyId}</td>
-      <td class="px-2 py-2 capitalize">{productType}</td>
+      <td class="px-2 py-2 capitalize">{_id}</td>
+      <td class="px-2 py-2 capitalize">{unit}</td>
       <td class="px-2 py-2">{price}</td>
-      <td class="px-2 py-2">{quantity}</td>
+      <td class="px-2 py-2">{maxNo}</td>
       <td class="px-2 py-2">
         <div className="flex gap-x-2">
           <svg

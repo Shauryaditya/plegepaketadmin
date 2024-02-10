@@ -1,166 +1,236 @@
 import React, { useState } from "react";
 import Header from "../../components/Header";
+import { getToken } from "../../hook/getToken";
+import toast from "react-hot-toast";
 
 const AddProduct = () => {
-  const [isPG51Checked, setIsPG51Checked] = useState(false);
-  const [isGloveChecked, setIsGloveChecked] = useState(false);
+  const token = getToken();
+  const [formData, setFormData] = useState({
+    product_name: "",
+    package_size: "",
+    unit: "",
+    isPG51: false,
+    isGlove: false,
+    maxNo: "",
+    initialNo: "",
+    price: "",
+    image: "",
+  });
 
-  const handlePG51Change = (event) => {
-    setIsPG51Checked(event.target.checked);
+  const handleChange = (event) => {
+    const { name, value, type, checked } = event.target;
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      [name]: type === "checkbox" ? checked : value,
+    }));
   };
 
-  const handleGloveChange = (event) => {
-    setIsGloveChecked(event.target.checked);
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+  
+    // Assuming formData is defined and contains the form data
+  
+    console.log("Form data:", formData);
+  
+    try {
+      const response = await fetch(
+        `${process.env.REACT_APP_URL}/api/v1/product/add-product`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify(formData),
+        }
+      );
+  
+      const responseData = await response.json();
+  
+      if (response.ok) {
+        toast.success("Successfully added the Product");
+      } else {
+        console.error("Failed to add the Product", responseData);
+      }
+    } catch (error) {
+      toast.error("Error while adding the Product");
+    }
   };
+  
   return (
-    <div className="w-full bg-gray-100 min-h-screen  relative">
+    <div className="w-full bg-gray-100 min-h-screen relative">
       <Header />
-
       <div className="ml-72 max-w-4xl bg-white rounded-lg p-4 mt-8">
         <div className="py-4">
           <h1 className="text-xl font-medium text-left">Add Product</h1>
         </div>
-        <form>
-        <div className="grid grid-cols-3 gap-4">
-          {/* Product details inputs */}
-          <div className="col-span-3 sm:col-span-3 md:col-span-3 lg:col-span-1">
-            <div className="mb-4">
-              <label htmlFor="productName" className="text-left block mb-1">
-                Product Name
-              </label>
-              <input
-                type="text"
-                id="productName"
-                name="productName"
-                className="w-full border rounded-md p-2"
-              />
+        <form onSubmit={handleSubmit}>
+          <div className="grid grid-cols-3 gap-4">
+            {/* Product details inputs */}
+            {/* Product Name */}
+            <div className="col-span-3 sm:col-span-3 md:col-span-3 lg:col-span-1">
+              <div className="mb-4">
+                <label htmlFor="productName" className="text-left block mb-1">
+                  Product Name
+                </label>
+                <input
+                  type="text"
+                  id="product_name"
+                  name="product_name"
+                  value={formData.product_name}
+                  onChange={handleChange}
+                  className="w-full border rounded-md p-2"
+                />
+              </div>
+            </div>
+            {/* Package Size */}
+            <div className="col-span-3 sm:col-span-3 md:col-span-3 lg:col-span-1">
+              <div className="mb-4">
+                <label htmlFor="packageSize" className="text-left block mb-1">
+                  Package Size
+                </label>
+                <input
+                  type="number"
+                  id="package_size"
+                  name="package_size"
+                  value={formData.package_size}
+                  onChange={handleChange}
+                  className="w-full border rounded-md p-2"
+                />
+              </div>
+            </div>
+            {/* Unit */}
+            <div className="col-span-3 sm:col-span-3 md:col-span-3 lg:col-span-1">
+              <div className="mb-4">
+                <label htmlFor="unit" className="text-left block mb-1">
+                  Unit
+                </label>
+                <select
+                  id="unit"
+                  name="unit"
+                  value={formData.unit}
+                  onChange={handleChange}
+                  className="w-full border rounded-md p-2"
+                >
+                  <option value="">--select</option>
+                  <option value="ml">ML</option>
+                  <option value="pieces">Pieces</option>
+                </select>
+              </div>
+            </div>
+            {/* isPG51 */}
+            <div className="col-span-3 sm:col-span-3 md:col-span-3 lg:col-span-1">
+              <div className="flex gap-x-4 mb-4">
+                <label htmlFor="isPG51" className="text-left block mb-1">
+                  isPG51
+                </label>
+                <input
+                  type="checkbox"
+                  id="isPG51"
+                  name="isPG51"
+                  checked={formData.isPG51}
+                  onChange={handleChange}
+                  className="border rounded-md p-2"
+                />
+              </div>
+            </div>
+            {/* isGlove */}
+            <div className="col-span-3 sm:col-span-3 md:col-span-3 lg:col-span-1">
+              <div className="flex gap-x-4 mb-4">
+                <label htmlFor="isGlove" className="text-left block mb-1">
+                  isGlove
+                </label>
+                <input
+                  type="checkbox"
+                  id="isGlove"
+                  name="isGlove"
+                  checked={formData.isGlove}
+                  onChange={handleChange}
+                  className="border rounded-md p-2"
+                />
+              </div>
             </div>
 
-            {/* Repeat for other input fields */}
-          </div>
-          <div className="col-span-3 sm:col-span-3 md:col-span-3 lg:col-span-1">
-            <div className="mb-4">
-              <label htmlFor="packageSize" className="text-left block mb-1">
-                Package Size
-              </label>
-              <input
-                type="number"
-                id="packagesize"
-                name="packagesize"
-                className="w-full border rounded-md p-2"
-              />
+            {/* Max Number */}
+            <div className="col-span-3 sm:col-span-3 md:col-span-3 lg:col-span-1">
+              <div className="mb-4">
+                <label htmlFor="maxNumber" className="text-left block mb-1">
+                  Max Number
+                </label>
+                <input
+                  type="number"
+                  id="maxNo"
+                  name="maxNo"
+                  value={formData.maxNo}
+                  onChange={handleChange}
+                  className="w-full border rounded-md p-2"
+                />
+              </div>
+            </div>
+            {/* Initial Number */}
+            <div className="col-span-3 sm:col-span-3 md:col-span-3 lg:col-span-1">
+              <div className="mb-4">
+                <label htmlFor="maxNumber" className="text-left block mb-1">
+                  Initial Number
+                </label>
+                <input
+                  type="number"
+                  id="initialNo"
+                  name="initialNo"
+                  value={formData.initialNo}
+                  onChange={handleChange}
+                  className="w-full border rounded-md p-2"
+                />
+              </div>
+            </div>
+            {/* Price */}
+            <div className="col-span-3 sm:col-span-3 md:col-span-3 lg:col-span-1">
+              <div className="mb-4">
+                <label htmlFor="maxNumber" className="text-left block mb-1">
+                  Price
+                </label>
+                <input
+                  type="text"
+                  id="price"
+                  name="price"
+                  value={formData.price}
+                  onChange={handleChange}
+                  className="w-full border rounded-md p-2"
+                />
+              </div>
+            </div>
+            {/* Image Link */}
+            <div className="col-span-3 sm:col-span-3 md:col-span-3 lg:col-span-1">
+              <div className="mb-4">
+                <label htmlFor="imageLink" className="text-left block mb-1">
+                  Image Link
+                </label>
+                <input
+                  type="text"
+                  id="imageLink"
+                  name="image"
+                  value={formData.image}
+                  onChange={handleChange}
+                  placeholder="Enter image URL or drop files here..."
+                  className="w-full border rounded-md p-2"
+                />
+              </div>
             </div>
           </div>
-
-          <div className="col-span-3 sm:col-span-3 md:col-span-3 lg:col-span-1">
-            <div className="mb-4">
-              <label htmlFor="unit" className="text-left block mb-1">
-                Unit
-              </label>
-              <select
-                id="unit"
-                name="unit"
-                className="w-full border rounded-md p-2"
-              >
-                <option value="">--select</option>
-                <option value="ML">ML</option>
-                <option value="Pieces">Pieces</option>
-              </select>
-            </div>
+          <div className="flex gap-x-4">
+            <button
+              type="submit"
+              className="bg-blue-900 text-white px-14 py-2 rounded-full"
+            >
+              Save
+            </button>
+            <button
+              type="button"
+              className="text-blue-900 border-blue-900 border px-14 py-2 rounded-full"
+            >
+              Cancel
+            </button>
           </div>
-
-          <div className="col-span-3 sm:col-span-3 md:col-span-3 lg:col-span-1">
-            <div className="flex gap-x-4 mb-4">
-              <label htmlFor="isPG51" className="text-left block mb-1">
-                isPG51
-              </label>
-              <input
-                type="checkbox"
-                id="isPG51"
-                name="isPG51"
-                className="border rounded-md p-2"
-                checked={isPG51Checked}
-                onChange={handlePG51Change}
-              />
-            </div>
-
-            <div className="flex gap-x-4 mb-4">
-              <label htmlFor="isGlove" className="text-left block mb-1">
-                isGlove
-              </label>
-              <input
-                type="checkbox"
-                id="isGlove"
-                name="isGlove"
-                className="border rounded-md p-2"
-                checked={isGloveChecked}
-                onChange={handleGloveChange}
-              />
-            </div>
-          </div>
-          <div className="col-span-3 sm:col-span-3 md:col-span-3 lg:col-span-1">
-            <div className="mb-4">
-              <label htmlFor="productName" className="text-left block mb-1">
-                Quantity
-              </label>
-              <input
-                type="text"
-                id="Quantity"
-                name="Quantity"
-                className="w-full border rounded-md p-2"
-              />
-            </div>
-
-            {/* Repeat for other input fields */}
-          </div>
-          <div className="col-span-3 sm:col-span-3 md:col-span-3 lg:col-span-1">
-            <div className="mb-4">
-              <label htmlFor="productName" className="text-left block mb-1">
-                Max Number
-              </label>
-              <input
-                type="number"
-                id="Max Number"
-                name="Max Number"
-                className="w-full border rounded-md p-2"
-              />
-            </div>
-
-            {/* Repeat for other input fields */}
-          </div>
-          {/* Textarea for product details */}
-          <div className="col-span-3">
-            <div className="mb-4">
-              <label htmlFor="productDetails" className="text-left block mb-1">
-                Product Details
-              </label>
-              <textarea
-                id="productDetails"
-                name="productDetails"
-                className="w-full border rounded-md p-2"
-              ></textarea>
-            </div>
-          </div>
-          {/* Image upload inputs */}
-          <div className="col-span-3 sm:col-span-3 md:col-span-3 lg:col-span-1">
-            <div className="mb-4">
-              <label htmlFor="productName" className="text-left block mb-1">
-                Images
-              </label>
-              <input
-                type="text"
-                id="ImageLink"
-                name="imageLink"
-                placeholder="Enter image URL or drop files here..."
-                className="w-full border rounded-md p-2"
-              />
-            </div>
-          </div>
-        </div>
-        <div className="flex gap-x-4">
-          <button className="bg-blue-900 text-white px-14 py-2 rounded-full">Save</button>
-          <button className=" text-blue-900 border-blue-900 border px-14 py-2 rounded-full">Cancel</button>
-        </div>
         </form>
       </div>
     </div>

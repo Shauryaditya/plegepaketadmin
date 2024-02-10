@@ -51,7 +51,7 @@ const Products = () => {
                    Product Id
                   </th>
                   <th scope="col" class="px-2 py-3">
-                   Category
+                   Units
                   </th>
                   <th scope="col" class="px-2 py-3">
                    Price
