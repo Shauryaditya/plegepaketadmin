@@ -1,15 +1,26 @@
-import React from "react";
+import React, { useState } from "react";
 import Header from "../../components/Header";
 
 const AddProduct = () => {
+  const [isPG51Checked, setIsPG51Checked] = useState(false);
+  const [isGloveChecked, setIsGloveChecked] = useState(false);
+
+  const handlePG51Change = (event) => {
+    setIsPG51Checked(event.target.checked);
+  };
+
+  const handleGloveChange = (event) => {
+    setIsGloveChecked(event.target.checked);
+  };
   return (
     <div className="w-full bg-gray-100 min-h-screen  relative">
       <Header />
 
-      <div className="ml-72 max-w-6xl bg-white rounded-lg p-4 mt-8">
+      <div className="ml-72 max-w-4xl bg-white rounded-lg p-4 mt-8">
         <div className="py-4">
           <h1 className="text-xl font-medium text-left">Add Product</h1>
         </div>
+        <form>
         <div className="grid grid-cols-3 gap-4">
           {/* Product details inputs */}
           <div className="col-span-3 sm:col-span-3 md:col-span-3 lg:col-span-1">
@@ -29,78 +40,63 @@ const AddProduct = () => {
           </div>
           <div className="col-span-3 sm:col-span-3 md:col-span-3 lg:col-span-1">
             <div className="mb-4">
-              <label htmlFor="productName" className="text-left block mb-1">
-                Categories
+              <label htmlFor="packageSize" className="text-left block mb-1">
+                Package Size
               </label>
               <input
-                type="text"
-                id="categories"
-                name="categories"
+                type="number"
+                id="packagesize"
+                name="packagesize"
                 className="w-full border rounded-md p-2"
               />
             </div>
-
-            {/* Repeat for other input fields */}
           </div>
+
           <div className="col-span-3 sm:col-span-3 md:col-span-3 lg:col-span-1">
             <div className="mb-4">
-              <label htmlFor="productName" className="text-left block mb-1">
-                Brand
+              <label htmlFor="unit" className="text-left block mb-1">
+                Unit
               </label>
-              <input
-                type="text"
-                id="brand"
-                name="brand"
+              <select
+                id="unit"
+                name="unit"
                 className="w-full border rounded-md p-2"
-              />
+              >
+                <option value="">--select</option>
+                <option value="ML">ML</option>
+                <option value="Pieces">Pieces</option>
+              </select>
             </div>
-
-            {/* Repeat for other input fields */}
           </div>
+
           <div className="col-span-3 sm:col-span-3 md:col-span-3 lg:col-span-1">
-            <div className="mb-4">
-              <label htmlFor="productName" className="text-left block mb-1">
-                Product Id
+            <div className="flex gap-x-4 mb-4">
+              <label htmlFor="isPG51" className="text-left block mb-1">
+                isPG51
               </label>
               <input
-                type="text"
-                id="productId"
-                name="productId"
-                className="w-full border rounded-md p-2"
+                type="checkbox"
+                id="isPG51"
+                name="isPG51"
+                className="border rounded-md p-2"
+                checked={isPG51Checked}
+                onChange={handlePG51Change}
               />
             </div>
 
-            {/* Repeat for other input fields */}
-          </div>
-          <div className="col-span-3 sm:col-span-3 md:col-span-3 lg:col-span-1">
-            <div className="mb-4">
-              <label htmlFor="productName" className="text-left block mb-1">
-                Price
+            <div className="flex gap-x-4 mb-4">
+              <label htmlFor="isGlove" className="text-left block mb-1">
+                isGlove
               </label>
               <input
-                type="text"
-                id="price"
-                name="price"
-                className="w-full border rounded-md p-2"
+                type="checkbox"
+                id="isGlove"
+                name="isGlove"
+                className="border rounded-md p-2"
+                checked={isGloveChecked}
+                onChange={handleGloveChange}
               />
             </div>
-
-            {/* Repeat for other input fields */}
-          </div>
-          <div className="col-span-3 sm:col-span-3 md:col-span-3 lg:col-span-1">
-            <div className="mb-4">
-              <label htmlFor="productName" className="text-left block mb-1">
-                Status
-              </label>
-              <input
-                type="text"
-                id="status"
-                name="status"
-                className="w-full border rounded-md p-2"
-              />
-            </div>
-
-            {/* Repeat for other input fields */}
           </div>
           <div className="col-span-3 sm:col-span-3 md:col-span-3 lg:col-span-1">
             <div className="mb-4">
@@ -120,12 +116,12 @@ const AddProduct = () => {
           <div className="col-span-3 sm:col-span-3 md:col-span-3 lg:col-span-1">
             <div className="mb-4">
               <label htmlFor="productName" className="text-left block mb-1">
-                Minimum Quantity
+                Max Number
               </label>
               <input
-                type="text"
-                id="Minimum Quantity"
-                name="Minimum Quantity"
+                type="number"
+                id="Max Number"
+                name="Max Number"
                 className="w-full border rounded-md p-2"
               />
             </div>
@@ -146,133 +142,26 @@ const AddProduct = () => {
             </div>
           </div>
           {/* Image upload inputs */}
-          <div className="col-span-3 flex justify-between">
+          <div className="col-span-3 sm:col-span-3 md:col-span-3 lg:col-span-1">
             <div className="mb-4">
-              <label htmlFor="productDetails" className="text-left block mb-1">
-                Product Details
+              <label htmlFor="productName" className="text-left block mb-1">
+                Images
               </label>
-              <div className="flex gap-x-4">
-              <div class="flex items-center justify-center w-full ">
-                <label
-                  for="dropzone-file"
-                  class="flex flex-col items-center justify-center w-full h-56 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600 p-4"
-                >
-                  <div class="flex flex-col items-center justify-center pt-5 pb-6">
-                    <svg
-                      class="w-8 h-8 mb-4 text-gray-500 dark:text-gray-400"
-                      aria-hidden="true"
-                      xmlns="http://www.w3.org/2000/svg"
-                      fill="none"
-                      viewBox="0 0 20 16"
-                    >
-                      <path
-                        stroke="currentColor"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        stroke-width="2"
-                        d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2"
-                      />
-                    </svg>
-                    <p class="mb-2 text-sm text-gray-500 dark:text-gray-400">
-                      <span class="font-semibold">Drop your image here</span> or Browser 
-                    </p>
-              
-                  </div>
-                  <input id="dropzone-file" type="file" class="hidden" />
-                </label>
-              </div>
-              <div class="flex items-center justify-center w-full">
-                <label
-                  for="dropzone-file"
-                  class="flex flex-col items-center justify-center w-full h-56 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600 p-4"
-                >
-                  <div class="flex flex-col items-center justify-center pt-5 pb-6">
-                    <svg
-                      class="w-8 h-8 mb-4 text-gray-500 dark:text-gray-400"
-                      aria-hidden="true"
-                      xmlns="http://www.w3.org/2000/svg"
-                      fill="none"
-                      viewBox="0 0 20 16"
-                    >
-                      <path
-                        stroke="currentColor"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        stroke-width="2"
-                        d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2"
-                      />
-                    </svg>
-                    <p class="mb-2 text-sm text-gray-500 dark:text-gray-400">
-                      <span class="font-semibold">Drop your image here</span> or Browser
-                    </p>
-              
-                  </div>
-                  <input id="dropzone-file" type="file" class="hidden" />
-                </label>
-              </div>
-              <div class="flex items-center justify-center w-full">
-                <label
-                  for="dropzone-file"
-                  class="flex flex-col items-center justify-center w-full h-56 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600 p-4"
-                >
-                  <div class="flex flex-col items-center justify-center pt-5 pb-6">
-                    <svg
-                      class="w-8 h-8 mb-4 text-gray-500 dark:text-gray-400"
-                      aria-hidden="true"
-                      xmlns="http://www.w3.org/2000/svg"
-                      fill="none"
-                      viewBox="0 0 20 16"
-                    >
-                      <path
-                        stroke="currentColor"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        stroke-width="2"
-                        d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2"
-                      />
-                    </svg>
-                    <p class="mb-2 text-sm text-gray-500 dark:text-gray-400">
-                      <span class="font-semibold">Drop your image here</span> or Browser
-                      
-                    </p>
-              
-                  </div>
-                  <input id="dropzone-file" type="file" class="hidden" />
-                </label>
-              </div>
-              <div class="flex items-center justify-center w-full ">
-                <label
-                  for="dropzone-file"
-                  class="flex flex-col items-center justify-center w-full h-56 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600 p-4"
-                >
-                  <div class="flex flex-col items-center justify-center pt-5 pb-6">
-                    <svg
-                      class="w-8 h-8 mb-4 text-gray-500 dark:text-gray-400"
-                      aria-hidden="true"
-                      xmlns="http://www.w3.org/2000/svg"
-                      fill="none"
-                      viewBox="0 0 20 16"
-                    >
-                      <path
-                        stroke="currentColor"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        stroke-width="2"
-                        d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2"
-                      />
-                    </svg>
-                    <p class="mb-2 text-sm text-gray-500 dark:text-gray-400">
-                      <span class="font-semibold">Drop your image here</span> or Browser
-                    </p>
-              
-                  </div>
-                  <input id="dropzone-file" type="file" class="hidden" />
-                </label>
-              </div>
-              </div>
+              <input
+                type="text"
+                id="ImageLink"
+                name="imageLink"
+                placeholder="Enter image URL or drop files here..."
+                className="w-full border rounded-md p-2"
+              />
             </div>
           </div>
         </div>
+        <div className="flex gap-x-4">
+          <button className="bg-blue-900 text-white px-14 py-2 rounded-full">Save</button>
+          <button className=" text-blue-900 border-blue-900 border px-14 py-2 rounded-full">Cancel</button>
+        </div>
+        </form>
       </div>
     </div>
   );

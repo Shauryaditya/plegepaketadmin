@@ -5,18 +5,18 @@ const Dashboard = () => {
   return (
     <div className="w-full bg-gray-100 min-h-screen  relative">
       <Header />
-      <div className="flex justify-between px-4 py-6 ml-64">
+      <div className="flex justify-between px-4 py-6 ml-72 max-w-4xl">
         <h1 className="text-sm">
           <span className="font-bold">Hey Rahul </span>here’s what’s happening
           with your store today
         </h1>
 
-        <div className="flex gap-x-12">
+        <div className="flex gap-x-6">
           <div className="bg-white w-64 h-24 rounded p-8"></div>
           <div className="bg-white w-64 h-24 rounded p-8"></div>
         </div>
       </div>
-      <div className="ml-64  bg-white rounded-lg p-4 max-w-6xl">
+      <div className="ml-72  bg-white rounded-lg p-4 max-w-4xl">
         <div className="flex flex-col">
             <div className="flex justify-between pb-8">
                 <h1 className="">Recent Orders</h1>

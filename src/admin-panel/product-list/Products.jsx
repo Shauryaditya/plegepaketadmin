@@ -10,7 +10,7 @@ const Products = () => {
     useEffect(() => {
         const fetchProduct = async () => {
             try {
-                const url = `${process.env.REACT_APP_URL}/api/v1/admin/viewProduct`;
+                const url = `${process.env.REACT_APP_URL}/api/v1/get/all-product`;
                
                 const response = await fetch(url, {
                     method: "GET",
@@ -32,7 +32,11 @@ const Products = () => {
   return (
     <div className="w-full bg-gray-100 min-h-screen  relative">
         <Header />
-        <div className="ml-64  bg-white rounded-lg p-4">
+        <div className="ml-72 max-w-4xl  bg-white rounded-lg p-4 mt-8">
+        <div className="py-4">
+          <h1 className="text-xl font-medium text-left">Product list</h1>
+          <p className='text-left text-sm '>Manage all your products</p>
+        </div>
         <div className="flex flex-col">
    
         <div className=" bg-gray-200  ">
