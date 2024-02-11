@@ -23,6 +23,10 @@ const Menus = [
         title : "Profile Setting",
         link : "profile-setting"
     },
+    {
+        title : "Add Complience",
+        link : "add-complience"
+    },
 ]
 
 export default Menus;

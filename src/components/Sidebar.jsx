@@ -21,6 +21,9 @@ const Sidebar = () => {
           ))}
         </ul>
       </nav>
+      <div className="">
+      <button className='px-6 py-2 rounded-full text-white bg-blue-900'>Logout</button>
+      </div>
     </div>
   </div>
   )

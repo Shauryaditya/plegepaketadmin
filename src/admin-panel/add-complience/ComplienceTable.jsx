@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import EditModal from "../../components/EditModal";
 
-export const ProductTable = ({ data }) => {
-  const { product_name, _id, unit, price, maxNo } = data;
+export const ComplienceTable = ({ data }) => {
+  const { compilation_name, _id } = data;
   const [singleproduct, setSingleProduct] = useState();
   const [isLoading, setIsLoading] = useState(true);
   const fetchSingleProductData = async () => {
@@ -32,12 +32,10 @@ export const ProductTable = ({ data }) => {
         scope="row"
         class="whitespace-nowrap px-2 py-2 font-medium text-gray-900"
       >
-        {product_name}
+        {compilation_name}
       </td>
       <td class="px-2 py-2 capitalize">{_id}</td>
-      <td class="px-2 py-2 capitalize">{unit}</td>
-      <td class="px-2 py-2">{price}</td>
-      <td class="px-2 py-2">{maxNo}</td>
+
       <td class="px-2 py-2">
         <div className="flex gap-x-2">
           <svg
