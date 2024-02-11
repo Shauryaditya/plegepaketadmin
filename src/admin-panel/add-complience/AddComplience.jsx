@@ -33,9 +33,9 @@ const Complience = () => {
 
     console.log("Products>>>",complience)
   return (
-    <div className="w-full bg-gray-100 min-h-screen  relative">
+    <div className="w-full bg-gray-100 min-h-screen  relative p-2">
       
-        <div className="ml-72 max-w-4xl  bg-white rounded-lg p-4 top-12 relative">
+        <div className="ml-60 max-w-7xl  bg-white rounded-lg p-4 top-12 relative">
         <div className="flex justify-between py-4">
             <div className="">
           <h1 className="text-xl font-medium text-left">Complience list</h1>

@@ -11,6 +11,8 @@ import Products from '../admin-panel/product-list/Products';
 import AddProduct from '../admin-panel/add-product/AddProduct';
 import Complience from '../admin-panel/add-complience/AddComplience';
 import ProfileSetting from '../admin-panel/profile-setting/ProfileSetting';
+import Orders from '../admin-panel/order-list/Orders';
+import ForgetPassword from '../admin-panel/auth/ForgetPassword';
 
 const MainRoutes = () => {
   const PreserveLocation = ({ children }) => {
@@ -45,7 +47,9 @@ const MainRoutes = () => {
         {(location) => (
           <Routes location={location}>
             <Route path='/'  element={<Login />} />
+            <Route path='/forget-password'  element={<ForgetPassword />} />
             <Route exact path="/dashboard"  element={<ProtectedRoute element={Dashboard} />} />
+            <Route exact path="/order-list"  element={<ProtectedRoute element={Orders} />} />
             <Route exact path="/product-list"  element={<ProtectedRoute element={Products} />} />
             <Route exact path="/add-product"  element={<ProtectedRoute element={AddProduct} />} />
             <Route exact path="/profile-setting"  element={<ProtectedRoute element={ProfileSetting} />} />

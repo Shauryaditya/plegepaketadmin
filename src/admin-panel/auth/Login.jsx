@@ -135,9 +135,9 @@ const Login = () => {
               <p className="text-red-500 text-center mt-2">{error}</p>
             )}
           </div>
-         
+          <a className="text-xs " href="/forget-password">Forget Password</a>
         </form>
-        
+   
       </div>
       {/* right side */}
       <div className="">

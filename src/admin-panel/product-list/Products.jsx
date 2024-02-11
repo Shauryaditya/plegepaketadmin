@@ -28,11 +28,10 @@ const Products = () => {
         fetchProduct();
     }, []);
 
-    console.log("Products>>>",products)
   return (
-    <div className="w-full bg-gray-100 min-h-screen  relative">
+    <div className="w-full bg-gray-100 min-h-screen  relative p-2">
         
-        <div className="ml-72 max-w-4xl  bg-white rounded-lg p-4 top-12 relative">
+        <div className="ml-60 max-w-7xl bg-white rounded-lg p-4 top-12 relative">
         <div className="py-4">
           <h1 className="text-xl font-medium text-left">Product list</h1>
           <p className='text-left text-sm '>Manage all your products</p>
