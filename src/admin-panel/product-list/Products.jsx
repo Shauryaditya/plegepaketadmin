@@ -31,8 +31,8 @@ const Products = () => {
     console.log("Products>>>",products)
   return (
     <div className="w-full bg-gray-100 min-h-screen  relative">
-        <Header />
-        <div className="ml-72 max-w-4xl  bg-white rounded-lg p-4 mt-8">
+        
+        <div className="ml-72 max-w-4xl  bg-white rounded-lg p-4 top-12 relative">
         <div className="py-4">
           <h1 className="text-xl font-medium text-left">Product list</h1>
           <p className='text-left text-sm '>Manage all your products</p>
@@ -46,9 +46,6 @@ const Products = () => {
                 <tr>
                   <th scope="col" class="px-2 py-3">
                     Product Name
-                  </th>
-                  <th scope="col" class="px-2 py-3">
-                   Product Id
                   </th>
                   <th scope="col" class="px-2 py-3">
                    Units

@@ -2,7 +2,7 @@ import React from 'react'
 
 const Searchbar = () => {
   return (
-    <div className='w-full'>
+    <div className='w-[27rem]'>
      <div class="pt-2 relative mx-auto text-gray-600">
         <input class="w-full border-2 border-gray-200 bg-gray-300 h-10 px-5 pr-16 rounded-full text-sm focus:outline-none"
           type="search" name="search" placeholder="Search" />

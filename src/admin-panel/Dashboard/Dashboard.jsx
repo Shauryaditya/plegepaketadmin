@@ -17,8 +17,8 @@ const Dashboard = () => {
   console.log(products);
   return (
     <div className="w-full bg-gray-100 min-h-screen  relative">
-      <Header />
-      <div className="flex justify-end px-4 py-6 ml-72 max-w-4xl gap-x-2">
+    
+      <div className="flex justify-end px-4 py-6 ml-72 max-w-4xl gap-x-2 top-12 relative">
         <div className="flex gap-x-6 justify-end">
           <div className="bg-white w-64 h-24 rounded p-1 ">
             <div className="flex justify-center gap-x-8">
@@ -44,7 +44,7 @@ const Dashboard = () => {
           </div>
         </div>
       </div>
-      <div className="ml-72  bg-white rounded-lg p-4 max-w-4xl">
+      <div className="ml-72  bg-white rounded-lg p-4 max-w-4xl top-12 relative">
         <div className="flex flex-col">
             <div className="flex justify-between pb-8">
                 <h1 className="">Recent Orders</h1>

@@ -64,14 +64,14 @@ const Login = () => {
   return (
     <div className="flex w-full max-w-screen-2xl mx-auto">
         {/* Left Side*/}
-        <div className="flex items-center justify-center w-5/12">
+        <div className="flex items-center justify-center w-1/2">
         <form className=" mx-auto w-72 " onSubmit={handleSubmit}>
           <div>
-            <h1 className="text-4xl font-bold">Log In!</h1>
-            <h3 className="text-2xl font-semibold pb-8 pt-3">Secure Entry to Gateway to Exclusive Services</h3>
+            <h1 className="text-4xl font-bold text-left">Log In!</h1>
+            <h3 className="text-sm font-normal text-left pb-8 pt-3">Secure Entry to Gateway to Exclusive Services</h3>
           </div>
           <div className="mb-4">
-            <p className=" flex gap-2 shadow appearance-none border rounded-full w-full py-3 px-3 text-[#c2c2c2] leading-tight focus:outline-none focus:shadow-outline">
+            <p className=" flex gap-2 shadow appearance-none border w-full py-3 px-3 text-[#c2c2c2] leading-tight focus:outline-none focus:shadow-outline">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
@@ -98,7 +98,7 @@ const Login = () => {
             </p>
           </div>
           <div className="mb-2">
-            <p className="flex gap-2 shadow appearance-none border rounded-full w-full py-3 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline">
+            <p className="flex gap-2 shadow appearance-none border  w-full py-3 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
@@ -124,7 +124,7 @@ const Login = () => {
               />
             </p>
           </div>
-          <div className="flex flex-col">
+          <div className="flex flex-col mt-10">
             <button
               className="bg-blue-500 hover:bg-blue-700 text-white  py-3 px-4 rounded-full focus:outline-none focus:shadow-outline"
               type="submit"

@@ -1,4 +1,4 @@
-import React,{useState} from "react";
+import React, { useState } from "react";
 import { useDisclosure } from "@chakra-ui/hooks";
 import {
   Button,
@@ -14,31 +14,32 @@ import {
   Text,
   Input,
 } from "@chakra-ui/react";
-import { AddIcon } from "@chakra-ui/icons";
+import { AddIcon, EditIcon } from "@chakra-ui/icons";
 import { getToken } from "../hook/getToken";
 
-const AddComplienceModal = ({ children }) => {
+const AddComplienceModal = ({ id, modalName, children }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [complianceName, setComplianceName] = useState("");
-  const token = getToken()
-console.log("Complience name >>>",complianceName)
+  const token = getToken();
+
   const handleAddCompliance = async () => {
-  
     try {
       // Make a request to your API to add compliance
-      const response = await fetch(`${process.env.REACT_APP_URL}/api/v1/product/add-compliance-name`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`
-        },
-        body: JSON.stringify({ compilation_name: complianceName }),
-      });
+      const response = await fetch(
+        `${process.env.REACT_APP_URL}/api/v1/product/add-compliance-name`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify({ compilation_name: complianceName }),
+        }
+      );
 
       if (!response.ok) {
         throw new Error("Failed to add compliance");
       }
-
 
       // Close the modal after successful addition
       onClose();
@@ -46,6 +47,34 @@ console.log("Complience name >>>",complianceName)
       console.error("Error adding compliance:", error);
     }
   };
+
+  
+    const handleEditComplience = async () => {
+      try {
+        // Make a request to your API to add compliance
+        const response = await fetch(
+          `${process.env.REACT_APP_URL}/api/v1/product/edit-compliance-name/${id}`,
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${token}`,
+            },
+            body: JSON.stringify({ compilation_name: complianceName }),
+          }
+        );
+
+        if (!response.ok) {
+          throw new Error("Failed to add compliance");
+        }
+
+        // Close the modal after successful addition
+        onClose();
+      } catch (error) {
+        console.error("Error adding compliance:", error);
+      }
+    
+  }
   return (
     <>
       {children ? (
@@ -53,7 +82,7 @@ console.log("Complience name >>>",complianceName)
       ) : (
         <IconButton
           display={{ base: "flex" }}
-          icon={<AddIcon />}
+          icon={modalName === "edit" ? <EditIcon /> : <AddIcon />}
           onClick={onOpen}
         />
       )}
@@ -79,13 +108,31 @@ console.log("Complience name >>>",complianceName)
               onChange={(e) => setComplianceName(e.target.value)}
               placeholder="Compliance Name"
             />
-    
           </ModalBody>
 
           <ModalFooter>
-          <Button colorScheme="white" textColor="black" border="1px" mr={3}  onClick={handleAddCompliance}>
-             Add
-            </Button>
+            {modalName === "edit" ? (
+              <Button
+                colorScheme="white"
+                textColor="black"
+                border="1px"
+                mr={3}
+                onClick={handleEditComplience}
+              >
+                Edit
+              </Button>
+            ) : (
+              <Button
+                colorScheme="white"
+                textColor="black"
+                border="1px"
+                mr={3}
+                onClick={handleAddCompliance}
+              >
+                Add
+              </Button>
+            )}
+
             <Button colorScheme="blue" mr={3} onClick={onClose}>
               Close
             </Button>

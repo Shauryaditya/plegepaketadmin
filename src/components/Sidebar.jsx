@@ -1,8 +1,20 @@
 import React from 'react'
 import Menus from '../admin-panel/Menu'
 import Company from '../../src/assets/Companylogo.png'
+import { useNavigate } from 'react-router-dom'
 
 const Sidebar = () => {
+  const navigate = useNavigate()
+    // Logout handler function
+    const handleLogout = () => {
+      console.log("Hellothere")
+      // Clear access token and refresh token from localStorage
+      localStorage.removeItem('access_token');
+      localStorage.removeItem('refresh_token');
+  
+      // After clearing authentication state, redirect the user to the login page
+      navigate('/'); // Redirect to the login page
+    };
   return (
     <div className="w-1/3">
     <div id="docs-sidebar" className="hs-overlay hs-overlay-open:translate-x-0 -translate-x-full transition-all duration-300 transform hidden fixed top-0 start-0 bottom-0 z-[60] w-64 bg-white border-e border-gray-200 pt-7 pb-10 overflow-y-auto lg:block lg:translate-x-0 lg:end-auto lg:bottom-0 [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar-thumb]:rounded-full [&::-webkit-scrollbar-track]:bg-gray-100 [&::-webkit-scrollbar-thumb]:bg-gray-300 dark:[&::-webkit-scrollbar-track]:bg-slate-700 dark:[&::-webkit-scrollbar-thumb]:bg-slate-500 dark:bg-gray-800 dark:border-gray-700">
@@ -22,7 +34,7 @@ const Sidebar = () => {
         </ul>
       </nav>
       <div className="">
-      <button className='px-6 py-2 rounded-full text-white bg-blue-900'>Logout</button>
+      <button className='px-6 py-2 rounded-full text-white bg-blue-900' onClick={handleLogout}>Logout</button>
       </div>
     </div>
   </div>

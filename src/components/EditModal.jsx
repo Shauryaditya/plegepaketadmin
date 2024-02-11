@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useDisclosure } from "@chakra-ui/hooks";
 import {
   Button,
@@ -15,11 +15,56 @@ import {
   Input,
 } from "@chakra-ui/react";
 import { EditIcon } from "@chakra-ui/icons";
+import { getToken } from "../hook/getToken";
 
-const EditModal = ({ product, children }) => {
+const EditModal = ({ id, product, children }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const { image, initialNo, maxNo, package_size, price, product_name, unit } =
-    product;
+  const {
+    image: initialImage,
+    product_name: initialProductName,
+    package_size: initialPackageSize,
+    unit: initialUnit,
+    price: initialPrice,
+  } = product;
+  const token = getToken();
+  const [image, setImage] = useState(initialImage);
+  const [productName, setProductName] = useState(initialProductName);
+  const [packageSize, setPackageSize] = useState(initialPackageSize);
+  const [unit, setUnit] = useState(initialUnit);
+  const [price, setPrice] = useState(initialPrice);
+
+  const handleUpdateProduct = async () => {
+    try {
+      console.log("Token>>>", token);
+
+      const response = await fetch(
+        `${process.env.REACT_APP_URL}/api/v1/product/edit-product/${id}`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify({
+            image,
+            product_name: productName,
+            package_size: parseInt(packageSize),
+            unit,
+            price,
+          }),
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error("Failed to update product");
+      }
+
+      onClose();
+    } catch (error) {
+      console.error("Error updating product:", error);
+    }
+  };
+
   return (
     <>
       {children ? (
@@ -47,27 +92,53 @@ const EditModal = ({ product, children }) => {
             alignItems="center"
             justifyContent="space-between"
           >
-            {image && ( // Checking if image exists before rendering
+            {image && (
               <Image
                 borderRadius="full"
                 boxSize="150px"
                 src={image}
-                alt={product_name}
+                alt={productName}
               />
             )}
-      
             <div className="grid grid-cols-2 gap-4">
-              <Input value={product_name} />
-              <Input value={initialNo} />
-              <Input value={maxNo} />
-              <Input value={package_size} />
-              <Input value={unit} />
+              <div className="">
+                <label htmlFor="">Product Image</label>
+                <Input
+                  value={productName}
+                  onChange={(e) => setProductName(e.target.value)}
+                />
+              </div>
+              <div className="">
+                <label htmlFor="">Package Size</label>
+                <Input
+                  value={packageSize}
+                  onChange={(e) => setPackageSize(e.target.value)}
+                />
+              </div>
+              <div className="">
+                <label htmlFor="">Unit</label>
+                <Input value={unit} onChange={(e) => setUnit(e.target.value)} />
+              </div>
+
+              <div className="">
+                <label htmlFor="">Price</label>
+                <Input
+                  value={price}
+                  onChange={(e) => setPrice(e.target.value)}
+                />
+              </div>
             </div>
           </ModalBody>
 
           <ModalFooter>
-          <Button colorScheme="white" textColor="black" border="1px" mr={3} onClick={onClose}>
-             Update
+            <Button
+              colorScheme="white"
+              textColor="black"
+              border="1px"
+              mr={3}
+              onClick={handleUpdateProduct}
+            >
+              Update
             </Button>
             <Button colorScheme="blue" mr={3} onClick={onClose}>
               Close

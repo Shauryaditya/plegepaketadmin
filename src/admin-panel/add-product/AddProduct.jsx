@@ -59,8 +59,8 @@ const AddProduct = () => {
   
   return (
     <div className="w-full bg-gray-100 min-h-screen relative">
-      <Header />
-      <div className="ml-72 max-w-4xl bg-white rounded-lg p-4 mt-8">
+      
+      <div className="ml-72 max-w-4xl bg-white rounded-lg p-4 top-12 relative">
         <div className="py-4">
           <h1 className="text-xl font-medium text-left">Add Product</h1>
         </div>
