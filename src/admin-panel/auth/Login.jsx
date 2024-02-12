@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import loginimg from "../../assets/login.png"
+import Company from "../../assets/Companylogo.png"
 
 const Login = () => {
 
@@ -65,13 +66,20 @@ const Login = () => {
     <div className="flex w-full max-w-screen-2xl mx-auto">
         {/* Left Side*/}
         <div className="flex items-center justify-center w-1/2">
-        <form className=" mx-auto w-72 " onSubmit={handleSubmit}>
+       
+        <form className="w-[35rem] " onSubmit={handleSubmit}>
+        <div className="flex justify-center items-center my-16">
+            <img src={Company} alt="" />
+          </div>
           <div>
             <h1 className="text-4xl font-bold text-left">Log In!</h1>
             <h3 className="text-sm font-normal text-left pb-8 pt-3">Secure Entry to Gateway to Exclusive Services</h3>
           </div>
           <div className="mb-4">
-            <p className=" flex gap-2 shadow appearance-none border w-full py-3 px-3 text-[#c2c2c2] leading-tight focus:outline-none focus:shadow-outline">
+            <div className="flex justify-start">
+            <label className="text-sm" htmlFor="">Email</label>
+            </div>
+            <p className=" flex gap-2 rounded border w-full py-3 px-3 text-[#c2c2c2] leading-tight focus:outline-none focus:shadow-outline">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
@@ -90,15 +98,18 @@ const Login = () => {
               <input
                 className="text-black outline-0"
                 id="email"
-                type="text"
-                placeholder="Username"
+                type="email"
+                placeholder="Email"
                 value={email}
                 onChange={handleEmailChange}
               />
             </p>
           </div>
           <div className="mb-2">
-            <p className="flex gap-2 shadow appearance-none border  w-full py-3 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline">
+          <div className="flex justify-start">
+            <label className="text-sm" htmlFor="">Password</label>
+            </div>
+            <p className="flex gap-2  appearance-none border rounded w-full py-3 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
@@ -124,9 +135,12 @@ const Login = () => {
               />
             </p>
           </div>
+          <div className="flex justify-end">
+          <a className="text-xs " href="/forget-password">Forget Password</a>
+          </div>
           <div className="flex flex-col mt-10">
             <button
-              className="bg-blue-500 hover:bg-blue-700 text-white  py-3 px-4 rounded-full focus:outline-none focus:shadow-outline"
+              className="bg-blue-900 hover:bg-blue-700 text-white  py-2 px-4 rounded-full focus:outline-none focus:shadow-outline"
               type="submit"
             >
               Log In
@@ -135,7 +149,7 @@ const Login = () => {
               <p className="text-red-500 text-center mt-2">{error}</p>
             )}
           </div>
-          <a className="text-xs " href="/forget-password">Forget Password</a>
+         
         </form>
    
       </div>
