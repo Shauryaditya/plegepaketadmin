@@ -33,7 +33,12 @@ const Menus = [
         link : "profile-setting"
     },
     {
-        title : "Add Complience",
+        title : "Add Complience Name",
+        src : Complience,
+        link : "add-complience-name"
+    },
+    {
+        title : "Add Complience ",
         src : Complience,
         link : "add-complience"
     },

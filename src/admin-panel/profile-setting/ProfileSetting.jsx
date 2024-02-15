@@ -36,7 +36,7 @@ const ProfileSetting = () => {
   return (
     <div className="max-w-7xl mt-14 p-2">
       <div className="ml-60 flex gap-x-4">
-        <div className="w-2/5 bg-white rounded-xl shadow-lg border h-48"></div>
+    
         <div className="w-3/5 bg-white rounded-xl shadow-lg border h-48 p-4">
           <h1 className="text-xl font-semibold text-left">Account</h1>
           <div className="grow flex gap-x-4 py-4">
