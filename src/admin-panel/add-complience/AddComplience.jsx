@@ -2,15 +2,24 @@ import { Button, Input, Select } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 import { getToken } from "../../hook/getToken";
 import { AddIcon } from "@chakra-ui/icons";
+import toast from "react-hot-toast";
 
 const AddCompliance = () => {
   const [compliances, setCompliances] = useState([]);
   const [products, setProducts] = useState([]);
   const [selectedProducts, setSelectedProducts] = useState([]);
+
   const [productToAdd, setProductToAdd] = useState("");
   const [selectedComplianceId, setSelectedComplianceId] = useState("");
   const [isComplianceDisabled, setIsComplianceDisabled] = useState(false);
   const [additionalProductFields, setAdditionalProductFields] = useState([]);
+
+  const [productAdd, setProductAdd] = useState([
+    {
+      product_id: "",
+      quantity: "",
+    },
+  ]);
 
   useEffect(() => {
     const fetchCompliances = async () => {
@@ -68,25 +77,35 @@ const AddCompliance = () => {
     setSelectedComplianceId(e.target.value);
   };
 
-  const handleProductChange = (productId) => {
+  // Function to handle changes in quantity
+  const handleQuantityChange = (index, event) => {
+    const { value } = event.target;
+    const updatedProductAdd = [...productAdd];
+    updatedProductAdd[index].quantity = value;
+    setProductAdd(updatedProductAdd);
+  };
+
+  const handleProductChange = (index, productId) => {
     setIsComplianceDisabled(true);
-    const product = products.find((product) => product._id === productId);
-    setProductToAdd(product);
+    console.log("Index>>>>", index);
+    if (index >= 0 && index < productAdd.length) {
+      productAdd[index].product_id = productId;
+    }
   };
 
   console.log("Product add :", productToAdd);
 
   const handleAddProduct = () => {
-    if (selectedProducts.length < 3) {
-      setSelectedProducts((prevProducts) => [...prevProducts, productToAdd]);
-      setAdditionalProductFields((prevFields) => [...prevFields, {}]); // Add an empty object to additional fields
-      setProductToAdd("");
-      setIsComplianceDisabled(false);
-    } else {
-      // Provide feedback to the user that they cannot add more than 3 products
-      console.log("You cannot add more than 3 products.");
-    }
+    console.log("call function>>>>>>");
+    const item = {
+      product_id: "",
+      quantity: "",
+    };
+
+    setProductAdd([...productAdd, item]);
   };
+
+  console.log("productAdd:", productAdd);
 
   // Function to handle product change for the additional product fields
   const handleAdditionalProductChange = (productId, index) => {
@@ -95,7 +114,6 @@ const AddCompliance = () => {
     updatedProducts[index] = product;
     setSelectedProducts(updatedProducts);
   };
-console.log("Selected Products>>>",selectedProducts)
   // const handleAddField = () => {
   //   setAdditionalProductFields(prevFields => [...prevFields, {}]);
   // };
@@ -103,15 +121,6 @@ console.log("Selected Products>>>",selectedProducts)
   // Function to handle form submission
   const handleSubmit = async () => {
     try {
-      const requestBody = {
-        compilations_id: selectedComplianceId, // Assuming you have selectedComplianceId state
-        product_id: selectedProducts.map((product) => ({
-          product_id: product._id,
-          quantity: 1, // Assuming all quantities are set to 1 for simplicity
-        })),
-      };
-      console.log("Request  Body >>> ", requestBody);
- 
       const token = getToken();
       const response = await fetch(
         `${process.env.REACT_APP_URL}/api/v1/product/add-compliance`,
@@ -125,14 +134,17 @@ console.log("Selected Products>>>",selectedProducts)
             compilations_id: selectedComplianceId, // Assuming you have selectedComplianceId state
             product_id: selectedProducts.map((product) => ({
               product_id: product._id,
-              quantity: 1, // Assuming all quantities are set to 1 for simplicity
+              quantity: product.quantity, // Assuming all quantities are set to 1 for simplicity
             })),
           }),
         }
       );
-
-      if (!response.ok) {
-        throw new Error("Failed to submit data");
+      const data = await response.json();
+      
+      if (response.ok) {
+        toast.success(data.message);
+      } else {
+        toast.error(data.message);
       }
 
       // Reset form or show success message
@@ -150,6 +162,7 @@ console.log("Selected Products>>>",selectedProducts)
         </div>
         <div className="flex gap-4">
           <Select
+            w="24rem"
             placeholder="Select compliance"
             onChange={handleComplianceChange}
             disabled={isComplianceDisabled}
@@ -160,24 +173,37 @@ console.log("Selected Products>>>",selectedProducts)
               </option>
             ))}
           </Select>
-          <Select
-            placeholder="Select product"
-            onChange={(e) => handleProductChange(e.target.value)}
-          >
-            {products.map((product, index) => (
-              <option key={index} value={product._id}>
-                {product.product_name}
-              </option>
-            ))}
-          </Select>
+          <div className="flex flex-col gap-2">
+            {productAdd.map((item, index) => (
+              <div className="flex  gap-4">
+                <Select
+                  key={index}
+                  placeholder="Select product"
+                  onChange={(e) => handleProductChange(index, e.target.value)}
+                >
+                  {products.map((product) => (
+                    <option key={product._id} value={product._id}>
+                      {product.product_name}
+                    </option>
+                  ))}
+                </Select>
 
-          <Input type="number" />
+                <Input
+                  value={item.quantity}
+                  onChange={(event) => handleQuantityChange(index, event)}
+                  placeholder="Enter quantity"
+                  type="number"
+                />
+              </div>
+            ))}
+          </div>
           <div className="flex justify-center items-center">
             <AddIcon onClick={handleAddProduct} />
           </div>
         </div>
         {additionalProductFields.map((field, index) => (
-          <div className="flex justify-between" key={index}>
+          <div className="flex flex-col justify-between gap-4 my-2" key={index}>
+            <Select disabled></Select>
             <Select
               placeholder="Select product"
               onChange={(e) =>
@@ -190,7 +216,11 @@ console.log("Selected Products>>>",selectedProducts)
                 </option>
               ))}
             </Select>
-            <Input type="number" />
+            <Input
+              value={field.quantity}
+              onChange={(event) => handleQuantityChange(index, event)}
+              type="number"
+            />
           </div>
         ))}
         {/* <div className="flex justify-center items-center">
