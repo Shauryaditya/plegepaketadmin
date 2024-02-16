@@ -1,7 +1,7 @@
 import { Button, Input, Select } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 import { getToken } from "../../hook/getToken";
-import { AddIcon } from "@chakra-ui/icons";
+import { AddIcon, CloseIcon } from "@chakra-ui/icons";
 import toast from "react-hot-toast";
 
 const AddCompliance = () => {
@@ -152,15 +152,22 @@ const AddCompliance = () => {
     }
   };
 
+  const handleRemoveProduct = (indexToRemove) => {
+    setProductAdd(prevProducts => {
+      // Filter out the product at the specified index
+      const updatedProducts = prevProducts.filter((_, index) => index !== indexToRemove);
+      return updatedProducts;
+    });
+  };
   return (
     <div className="w-full bg-gray-100 min-h-screen relative p-2">
       <div className="ml-60 max-w-7xl bg-white rounded-lg p-4 top-12 relative">
         <div className="py-4">
           <h1 className="text-xl font-medium text-left">Add Compliance</h1>
         </div>
-        <div className="flex gap-4">
+        <div className="flex  gap-4 ">
           <Select
-            w="24rem"
+            w="35rem"
             placeholder="Select compliance"
             onChange={handleComplianceChange}
             disabled={isComplianceDisabled}
@@ -192,6 +199,9 @@ const AddCompliance = () => {
                   placeholder="Enter quantity"
                   type="number"
                 />
+                <div className="flex justify-center items-center">
+                 <CloseIcon onClick={() => handleRemoveProduct(index)} cursor="pointer" />
+                 </div>
               </div>
             ))}
           </div>
@@ -200,7 +210,7 @@ const AddCompliance = () => {
           </div>
         </div>
         {additionalProductFields.map((field, index) => (
-          <div className="flex flex-col justify-between gap-4 my-2" key={index}>
+          <div className="flex flex-col  gap-4 my-2" key={index}>
             <Select disabled></Select>
             <Select
               placeholder="Select product"
@@ -224,7 +234,7 @@ const AddCompliance = () => {
         {/* <div className="flex justify-center items-center">
           <AddIcon onClick={handleAddField} />
         </div> */}
-        <Button onClick={handleSubmit}>Submit</Button>{" "}
+        <Button margin="2rem" onClick={handleSubmit}>Add Complience</Button>{" "}
         {/* Add a submit button */}
       </div>
     </div>

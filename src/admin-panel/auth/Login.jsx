@@ -101,14 +101,14 @@ const Login = () => {
         
 
               <input
-                className="text-black outline-0"
+                className="text-black outline-0 w-2/3"
                 id="email"
                 type="email"
                 placeholder="Email"
                 value={email}
                 onChange={handleEmailChange}
               />
-              <p className="text-xs font-thin" onClick={handleSendOtp}>Send OTP</p>
+              <p className="text-xs font-thin cursor-pointer"  onClick={handleSendOtp}>Send OTP</p>
             </p>
           </div>
           <div className="">
