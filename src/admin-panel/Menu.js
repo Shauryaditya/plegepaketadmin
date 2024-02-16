@@ -27,11 +27,7 @@ const Menus = [
         link : "add-product"
     },
 
-    {
-        title : "Profile Setting",
-        src : Profile,
-        link : "profile-setting"
-    },
+
     {
         title : "Add Complience Name",
         src : Complience,

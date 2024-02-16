@@ -53,7 +53,6 @@ const MainRoutes = () => {
             <Route exact path="/order-list"  element={<ProtectedRoute element={Orders} />} />
             <Route exact path="/product-list"  element={<ProtectedRoute element={Products} />} />
             <Route exact path="/add-product"  element={<ProtectedRoute element={AddProduct} />} />
-            <Route exact path="/profile-setting"  element={<ProtectedRoute element={ProfileSetting} />} />
             <Route exact path="/add-complience-name"  element={<ProtectedRoute element={Complience} />} />
             <Route exact path="/add-complience"  element={<ProtectedRoute element={AddComplience} />} />
           </Routes>
