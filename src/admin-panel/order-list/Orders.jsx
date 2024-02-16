@@ -11,7 +11,7 @@ const Orders = () => {
   useEffect(() => {
     const fetchOrders = async () => {
       try {
-        const url = `${process.env.REACT_APP_URL}/api/v1/order/get-all-orders?page=1&pageSize=2`;
+        const url = `${process.env.REACT_APP_URL}/api/v1/order/get-all-orders`;
         const response = await fetch(url, {
           method: "GET",
           headers: {

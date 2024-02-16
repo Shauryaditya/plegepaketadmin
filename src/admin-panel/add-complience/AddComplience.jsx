@@ -122,6 +122,10 @@ const AddCompliance = () => {
   const handleSubmit = async () => {
     try {
       const token = getToken();
+      const requestBody = {
+        compilations_id: selectedComplianceId,
+        product_id: [...productAdd] // Assuming productAdd is an array containing products
+      };
       const response = await fetch(
         `${process.env.REACT_APP_URL}/api/v1/product/add-compliance`,
         {
@@ -130,13 +134,7 @@ const AddCompliance = () => {
             "Content-Type": "application/json",
             Authorization: `Bearer ${token}`,
           },
-          body: JSON.stringify({
-            compilations_id: selectedComplianceId, // Assuming you have selectedComplianceId state
-            product_id: selectedProducts.map((product) => ({
-              product_id: product._id,
-              quantity: product.quantity, // Assuming all quantities are set to 1 for simplicity
-            })),
-          }),
+          body: JSON.stringify(requestBody),
         }
       );
       const data = await response.json();
