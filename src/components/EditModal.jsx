@@ -59,7 +59,7 @@ const EditModal = ({ id, product, children }) => {
         throw new Error("Failed to update product");
       }
 
-      onClose();
+      window.location.href = "/product-list"
     } catch (error) {
       console.error("Error updating product:", error);
     }

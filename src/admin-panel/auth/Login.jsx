@@ -85,7 +85,7 @@ const Login = () => {
         {/* Left Side*/}
         <div className="flex items-center justify-center w-1/2">
        
-        <form className="w-[35rem]">
+        <form className="w-[35rem] p-4">
         <div className="flex justify-center items-center my-16">
             <img src={Company} alt="" />
           </div>

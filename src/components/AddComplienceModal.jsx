@@ -42,39 +42,39 @@ const AddComplienceModal = ({ id, modalName, children }) => {
       }
 
       // Close the modal after successful addition
+      window.location.reload()
       onClose();
     } catch (error) {
       console.error("Error adding compliance:", error);
     }
   };
 
-  
-    const handleEditComplience = async () => {
-      try {
-        // Make a request to your API to add compliance
-        const response = await fetch(
-          `${process.env.REACT_APP_URL}/api/v1/product/edit-compliance-name/${id}`,
-          {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: `Bearer ${token}`,
-            },
-            body: JSON.stringify({ compilation_name: complianceName }),
-          }
-        );
-
-        if (!response.ok) {
-          throw new Error("Failed to add compliance");
+  const handleEditComplience = async () => {
+    try {
+      // Make a request to your API to add compliance
+      const response = await fetch(
+        `${process.env.REACT_APP_URL}/api/v1/product/edit-compliance-name/${id}`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify({ compilation_name: complianceName }),
         }
+      );
 
-        // Close the modal after successful addition
-        onClose();
-      } catch (error) {
-        console.error("Error adding compliance:", error);
+      if (!response.ok) {
+        throw new Error("Failed to add compliance");
       }
-    
-  }
+
+      // Close the modal after successful addition
+      window.location.reload();
+      onClose();
+    } catch (error) {
+      console.error("Error adding compliance:", error);
+    }
+  };
   return (
     <>
       {children ? (
@@ -102,7 +102,12 @@ const AddComplienceModal = ({ id, modalName, children }) => {
             alignItems="center"
             justifyContent="space-between"
           >
-            <h1 className="text-xl font-bold">Add New Complience</h1>
+            {modalName === "edit" ? (
+              <h1 className="text-xl font-bold">Edit Complience</h1>
+            ) : (
+              <h1 className="text-xl font-bold">Add New Complience</h1>
+            )}
+
             <Input
               value={complianceName}
               onChange={(e) => setComplianceName(e.target.value)}
