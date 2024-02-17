@@ -2,9 +2,13 @@ import React,{useState,useEffect} from 'react'
 import { getToken } from '../../hook/getToken'
 import Header from '../../components/Header';
 import { ProductTable } from './ProductTable';
+import Pagination from '../../components/Pagination';
 
 const Products = () => {
     const [products, setProducts] = useState([]);
+    const [currentPage, setCurrentPage] = useState(1);
+    const [pageSize, setPageSize] = useState(10);
+    const [totalItems, setTotalItems] = useState(0);
     const token = getToken()
     console.log("Tokenn>>",token)
     useEffect(() => {
@@ -20,6 +24,7 @@ const Products = () => {
                 });
                 const data = await response.json();
                 setProducts(data.data); // Assuming data is an array of products
+                setTotalItems(data.data.length);
             } catch (error) {
                 console.error('Error fetching products:', error);
             }
@@ -27,7 +32,7 @@ const Products = () => {
 
         fetchProduct();
     }, []);
-
+console.log("Total items:",totalItems)
   return (
     <div className="w-full bg-gray-100 min-h-screen  relative p-2">
         
@@ -38,7 +43,7 @@ const Products = () => {
         </div>
         <div className="flex flex-col">
    
-        <div className=" bg-gray-200  ">
+        <div className=" ">
           <div class="relative overflow-x-auto">
             <table class="w-full text-left text-xs">
               <thead class="bg-gray-100 text-xs font-medium uppercase text-[#666666]">
@@ -72,6 +77,14 @@ const Products = () => {
               </tbody>
             </table>
           </div>
+          <div className="mt-2">
+            <Pagination
+              currentPage={currentPage}
+              totalItems={totalItems}
+              pageSize={pageSize}
+              setCurrentPage={setCurrentPage} 
+              />
+              </div>
         </div>
         </div>
       </div>

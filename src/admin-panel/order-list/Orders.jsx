@@ -1,11 +1,15 @@
 import React, { useState, useEffect } from "react";
 import { getToken } from "../../hook/getToken";
 
-
 import { OrderTable } from "./OrderTable";
+import Pagination from "../../components/Pagination";
 
 const Orders = () => {
   const [orders, setOrders] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [pageSize, setPageSize] = useState(10);
+  const [totalItems, setTotalItems] = useState(0);
+
   const token = getToken();
   console.log("Tokenn>>", token);
   useEffect(() => {
@@ -20,6 +24,7 @@ const Orders = () => {
         });
         const data = await response.json();
         setOrders(data.orderData); // Assuming data is an array of products
+        setTotalItems(data.orderData.length);
       } catch (error) {
         console.error("Error fetching products:", error);
       }
@@ -37,18 +42,18 @@ const Orders = () => {
           <p className="text-left text-sm ">Manage all your products</p>
         </div>
         <div className="flex flex-col">
-          <div className=" bg-gray-200  ">
+          <div className=" bg-white ">
             <div class="relative overflow-x-auto">
               <table class="w-full text-left text-xs">
                 <thead class="bg-gray-100 text-xs font-medium uppercase text-[#666666]">
                   <tr>
                     <th scope="col" class="px-2 py-3">
-                     Customer Name
+                      Customer Name
                     </th>
                     <th scope="col" class="px-2 py-3">
                       Email
                     </th>
-               
+
                     <th scope="col" class="px-2 py-3">
                       Order Date
                     </th>
@@ -64,6 +69,14 @@ const Orders = () => {
                     ))}
                 </tbody>
               </table>
+            </div>
+            <div className="mt-2">
+              <Pagination
+                currentPage={currentPage}
+                totalItems={totalItems}
+                pageSize={pageSize}
+                setCurrentPage={setCurrentPage}
+              />
             </div>
           </div>
         </div>
