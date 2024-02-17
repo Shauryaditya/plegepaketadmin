@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useDisclosure } from "@chakra-ui/hooks";
 import {
   Button,
@@ -13,6 +13,7 @@ import {
   ModalOverlay,
   Text,
   Input,
+  Box,
 } from "@chakra-ui/react";
 import { AddIcon, EditIcon } from "@chakra-ui/icons";
 import { getToken } from "../hook/getToken";
@@ -42,7 +43,7 @@ const AddComplienceModal = ({ id, modalName, children }) => {
       }
 
       // Close the modal after successful addition
-      window.location.reload()
+      window.location.reload();
       onClose();
     } catch (error) {
       console.error("Error adding compliance:", error);
@@ -75,6 +76,29 @@ const AddComplienceModal = ({ id, modalName, children }) => {
       console.error("Error adding compliance:", error);
     }
   };
+  const [complienceProducts, setComplienceProducts] = useState([]);
+  const handleComplienceProducts = async () => {
+    try {
+      const response = await fetch(
+        `${process.env.REACT_APP_URL}/api/v1/get/product-compilations/${id}`
+      );
+
+      if (!response.ok) {
+        throw new Error("Failed to fetch products");
+      }
+
+      const data = await response.json();
+      setComplienceProducts(data.productDetails); // Assuming data is an array of products
+    } catch (error) {
+      console.error("Error fetching products:", error);
+    }
+  };
+
+  useEffect(() => {
+    handleComplienceProducts();
+  }, []); // Empty dependency array ensures the effect runs only once on component mount
+
+  console.log("Complience Products>>>", complienceProducts);
   return (
     <>
       {children ? (
@@ -86,9 +110,9 @@ const AddComplienceModal = ({ id, modalName, children }) => {
           onClick={onOpen}
         />
       )}
-      <Modal size="lg" isOpen={isOpen} onClose={onClose} isCentered>
+      <Modal size="xl" isOpen={isOpen} onClose={onClose} isCentered>
         <ModalOverlay />
-        <ModalContent h="200px">
+        <ModalContent h="500px">
           <ModalHeader
             fontSize="40px"
             fontFamily="Work sans"
@@ -101,6 +125,7 @@ const AddComplienceModal = ({ id, modalName, children }) => {
             flexDir="column"
             alignItems="center"
             justifyContent="space-between"
+            padding="4rem"
           >
             {modalName === "edit" ? (
               <h1 className="text-xl font-bold">Edit Complience</h1>
@@ -113,8 +138,24 @@ const AddComplienceModal = ({ id, modalName, children }) => {
               onChange={(e) => setComplianceName(e.target.value)}
               placeholder="Compliance Name"
             />
-          </ModalBody>
 
+                {modalName === "edit" ? (
+             
+              <Box marginTop="50px">
+                <Text fontStyle="italic" fontFamily="sans-serif" >Products</Text>
+                {complienceProducts.map((product, index) => (
+                  <div className="grid grid-cols-3">
+                  <p key={index}>{product.product_name}</p>
+                  </div>
+                ))}
+              </Box>
+              
+            ) : null}
+
+          </ModalBody>
+          <ModalBody>
+      
+      </ModalBody>
           <ModalFooter>
             {modalName === "edit" ? (
               <Button
