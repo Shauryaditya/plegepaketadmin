@@ -11,6 +11,7 @@ const Sidebar = () => {
       // Clear access token and refresh token from localStorage
       localStorage.removeItem('access_token');
       localStorage.removeItem('refresh_token');
+      localStorage.removeItem('isLogin')
   
       // After clearing authentication state, redirect the user to the login page
       navigate('/'); // Redirect to the login page
