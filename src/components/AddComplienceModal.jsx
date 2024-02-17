@@ -98,7 +98,6 @@ const AddComplienceModal = ({ id, modalName, children }) => {
     handleComplienceProducts();
   }, []); // Empty dependency array ensures the effect runs only once on component mount
 
-  console.log("Complience Products>>>", complienceProducts);
   return (
     <>
       {children ? (
@@ -112,7 +111,7 @@ const AddComplienceModal = ({ id, modalName, children }) => {
       )}
       <Modal size="xl" isOpen={isOpen} onClose={onClose} isCentered>
         <ModalOverlay />
-        <ModalContent h="500px">
+        <ModalContent h="530px">
           <ModalHeader
             fontSize="40px"
             fontFamily="Work sans"
@@ -124,8 +123,8 @@ const AddComplienceModal = ({ id, modalName, children }) => {
             display="flex"
             flexDir="column"
             alignItems="center"
-            justifyContent="space-between"
-            padding="4rem"
+            gap="20px"
+            
           >
             {modalName === "edit" ? (
               <h1 className="text-xl font-bold">Edit Complience</h1>
@@ -139,23 +138,26 @@ const AddComplienceModal = ({ id, modalName, children }) => {
               placeholder="Compliance Name"
             />
 
-                {modalName === "edit" ? (
-             
-              <Box marginTop="50px">
-                <Text fontStyle="italic" fontFamily="sans-serif" >Products</Text>
-                {complienceProducts.map((product, index) => (
-                  <div className="grid grid-cols-3">
-                  <p key={index}>{product.product_name}</p>
-                  </div>
-                ))}
+            {modalName === "edit" ? (
+              <Box marginTop="35px">
+                <Text fontStyle="italic" fontFamily="sans-serif">
+                  Products
+                </Text>
+                <div className="grid grid-cols-2 gap-4">
+                  {" "}
+                  {/* Set grid to have two columns and add gap */}
+                  {complienceProducts.map((product, index) => (
+                    <div key={index} className="border p-2">
+                      {" "}
+                      {/* Add border and padding to each product */}
+                      <p>{product.product_name}</p>
+                    </div>
+                  ))}
+                </div>
               </Box>
-              
             ) : null}
-
           </ModalBody>
-          <ModalBody>
-      
-      </ModalBody>
+          
           <ModalFooter>
             {modalName === "edit" ? (
               <Button
