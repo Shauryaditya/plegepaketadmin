@@ -6,6 +6,23 @@ export const OrderTable = ({ data }) => {
   const [singleproduct, setSingleProduct] = useState();
   const [isLoading, setIsLoading] = useState(true);
 
+    // Function to format the order date
+    const formatOrderDate = (dateString) => {
+      const options = {
+        year: "numeric",
+        month: "short",
+        day: "numeric",
+        hour: "2-digit",
+        minute: "2-digit",
+        second: "2-digit",
+      };
+      const formattedDate = new Date(dateString).toLocaleDateString(
+        undefined,
+        options
+      );
+      return formattedDate;
+    };
+  
   return (
     <tr class="border-b border-solid border-gray-200 bg-white hover:bg-gray-50 text-[#222222]">
       <td
@@ -19,7 +36,7 @@ export const OrderTable = ({ data }) => {
       </td>
 
       <td class="px-2 py-2 capitalize">{email}</td>
-      <td class="px-2 py-2">{orderDate}</td>
+      <td class="px-2 py-2">{formatOrderDate(orderDate)}</td>
       <td class="px-2 py-2">
         <div className="flex gap-x-2">
           <svg
