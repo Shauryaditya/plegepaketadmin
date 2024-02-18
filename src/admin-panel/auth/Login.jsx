@@ -108,7 +108,7 @@ const Login = () => {
                 value={email}
                 onChange={handleEmailChange}
               />
-              <p className="text-xs font-thin cursor-pointer"  onClick={handleSendOtp}>Send OTP</p>
+              <p className="text-xs font-normal text-blue-400 cursor-pointer"  onClick={handleSendOtp}>Send OTP</p>
             </p>
           </div>
           <div className="">
