@@ -22,7 +22,6 @@ export const ComplienceTable = ({ data }) => {
           headers: {
             Authorization: `Bearer ${token}`,
           }
-
         }
       );
         const data  = await response.json();
@@ -51,6 +50,7 @@ export const ComplienceTable = ({ data }) => {
 
       <td class="px-2 py-2">
         <div className="flex gap-x-2">
+        <AddComplienceModal id={_id} modalName="view" />
           {modalName === "edit" && (
             <AddComplienceModal id={_id} modalName={modalName} />
           )}

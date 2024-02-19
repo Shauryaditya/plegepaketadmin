@@ -11,7 +11,7 @@ const Orders = () => {
   const [totalItems, setTotalItems] = useState(0);
 
   const token = getToken();
-  console.log("Tokenn>>", token);
+ 
   useEffect(() => {
     const fetchOrders = async () => {
       try {

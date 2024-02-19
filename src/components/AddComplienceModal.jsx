@@ -15,7 +15,7 @@ import {
   Input,
   Box,
 } from "@chakra-ui/react";
-import { AddIcon, EditIcon } from "@chakra-ui/icons";
+import { AddIcon, EditIcon, ViewIcon } from "@chakra-ui/icons";
 import { getToken } from "../hook/getToken";
 
 const AddComplienceModal = ({ id, modalName, children }) => {
@@ -105,7 +105,15 @@ const AddComplienceModal = ({ id, modalName, children }) => {
       ) : (
         <IconButton
           display={{ base: "flex" }}
-          icon={modalName === "edit" ? <EditIcon /> : <AddIcon />}
+          icon={
+            modalName === "edit" ? (
+              <EditIcon />
+            ) : modalName === "view" ? (
+              <ViewIcon />
+            ) : (
+              <AddIcon />
+            )
+          }
           onClick={onOpen}
         />
       )}
@@ -124,40 +132,37 @@ const AddComplienceModal = ({ id, modalName, children }) => {
             flexDir="column"
             alignItems="center"
             gap="20px"
-            
           >
             {modalName === "edit" ? (
-              <h1 className="text-xl font-bold">Edit Complience</h1>
+              <h1 className="text-xl font-bold">Edit Compliance</h1>
             ) : (
-              <h1 className="text-xl font-bold">Add New Complience</h1>
+              <>
+                <h1 className="text-xl font-bold">View Compliance</h1>
+
+                <Box marginTop="35px">
+                  <Text fontStyle="italic" fontFamily="sans-serif">
+                    Products
+                  </Text>
+
+                  <div className="grid grid-cols-2 gap-4">
+                    {complienceProducts.map((product, index) => (
+                      <div key={index} className="border p-2">
+                        <p>{product.product_name}</p>
+                      </div>
+                    ))}
+                  </div>
+                </Box>
+              </>
             )}
-
-            <Input
-              value={complianceName}
-              onChange={(e) => setComplianceName(e.target.value)}
-              placeholder="Compliance Name"
-            />
-
-            {modalName === "edit" ? (
-              <Box marginTop="35px">
-                <Text fontStyle="italic" fontFamily="sans-serif">
-                  Products
-                </Text>
-                <div className="grid grid-cols-2 gap-4">
-                  {" "}
-                  {/* Set grid to have two columns and add gap */}
-                  {complienceProducts.map((product, index) => (
-                    <div key={index} className="border p-2">
-                      {" "}
-                      {/* Add border and padding to each product */}
-                      <p>{product.product_name}</p>
-                    </div>
-                  ))}
-                </div>
-              </Box>
-            ) : null}
+            {modalName !== "view" && (
+              <Input
+                value={complianceName}
+                onChange={(e) => setComplianceName(e.target.value)}
+                placeholder="Compliance Name"
+              />
+            )}
           </ModalBody>
-          
+
           <ModalFooter>
             {modalName === "edit" ? (
               <Button
@@ -169,7 +174,8 @@ const AddComplienceModal = ({ id, modalName, children }) => {
               >
                 Edit
               </Button>
-            ) : (
+            ) : null}
+            {modalName !== "view" && (
               <Button
                 colorScheme="white"
                 textColor="black"
@@ -180,7 +186,6 @@ const AddComplienceModal = ({ id, modalName, children }) => {
                 Add
               </Button>
             )}
-
             <Button colorScheme="blue" mr={3} onClick={onClose}>
               Close
             </Button>
