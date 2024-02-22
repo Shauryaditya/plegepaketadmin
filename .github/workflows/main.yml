@@ -21,3 +21,4 @@ name: Deploy to EC2
 	      - name: SSH into EC2 and deploy
 		run: |
 		  ssh -o StrictHostKeyChecking=no ubuntu@3.70.107.157 "cd /var/www/html/pflegepaket-admin && git pull origin main"
+
