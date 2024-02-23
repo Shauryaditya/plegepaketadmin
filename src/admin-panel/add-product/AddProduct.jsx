@@ -118,38 +118,7 @@ const AddProduct = () => {
                 </select>
               </div>
             </div>
-            {/* isPG51 */}
-            <div className="col-span-3 sm:col-span-3 md:col-span-3 lg:col-span-1">
-              <div className="flex gap-x-4 mb-4">
-                <label htmlFor="isPG51" className="text-left block mb-1">
-                  isPG51
-                </label>
-                <input
-                  type="checkbox"
-                  id="isPG51"
-                  name="isPG51"
-                  checked={formData.isPG51}
-                  onChange={handleChange}
-                  className="border rounded-md p-2"
-                />
-              </div>
-            </div>
-            {/* isGlove */}
-            <div className="col-span-3 sm:col-span-3 md:col-span-3 lg:col-span-1">
-              <div className="flex gap-x-4 mb-4">
-                <label htmlFor="isGlove" className="text-left block mb-1">
-                  isGlove
-                </label>
-                <input
-                  type="checkbox"
-                  id="isGlove"
-                  name="isGlove"
-                  checked={formData.isGlove}
-                  onChange={handleChange}
-                  className="border rounded-md p-2"
-                />
-              </div>
-            </div>
+         
 
             {/* Max Number */}
             <div className="col-span-3 sm:col-span-3 md:col-span-3 lg:col-span-1">
