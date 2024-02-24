@@ -13,6 +13,7 @@ const AddCompliance = () => {
   const [selectedComplianceId, setSelectedComplianceId] = useState("");
   const [isComplianceDisabled, setIsComplianceDisabled] = useState(false);
   const [additionalProductFields, setAdditionalProductFields] = useState([]);
+  const [totalPrice, setTotalPrice] = useState(0);
 
   const [productAdd, setProductAdd] = useState([
     {
@@ -77,11 +78,23 @@ const AddCompliance = () => {
     setSelectedComplianceId(e.target.value);
   };
 
-  // Function to handle changes in quantity
   const handleQuantityChange = (index, event) => {
     const { value } = event.target;
     const updatedProductAdd = [...productAdd];
     updatedProductAdd[index].quantity = value;
+
+    // Calculate total price
+    let totalPrice = 0;
+    updatedProductAdd.forEach((item, index) => {
+      const product = products.find(
+        (product) => product._id === item.product_id
+      );
+      if (product) {
+        totalPrice += product.price * parseInt(item.quantity);
+      }
+    });
+    setTotalPrice(totalPrice);
+
     setProductAdd(updatedProductAdd);
   };
 
@@ -93,10 +106,7 @@ const AddCompliance = () => {
     }
   };
 
-  console.log("Product add :", productToAdd);
-
   const handleAddProduct = () => {
-    console.log("call function>>>>>>");
     const item = {
       product_id: "",
       quantity: "",
@@ -105,26 +115,21 @@ const AddCompliance = () => {
     setProductAdd([...productAdd, item]);
   };
 
-  console.log("productAdd:", productAdd);
-
-  // Function to handle product change for the additional product fields
-  const handleAdditionalProductChange = (productId, index) => {
-    const updatedProducts = [...selectedProducts];
-    const product = products.find((product) => product._id === productId);
-    updatedProducts[index] = product;
-    setSelectedProducts(updatedProducts);
+  const handleRemoveProduct = (indexToRemove) => {
+    setProductAdd((prevProducts) => {
+      const updatedProducts = prevProducts.filter(
+        (_, index) => index !== indexToRemove
+      );
+      return updatedProducts;
+    });
   };
-  // const handleAddField = () => {
-  //   setAdditionalProductFields(prevFields => [...prevFields, {}]);
-  // };
 
-  // Function to handle form submission
   const handleSubmit = async () => {
     try {
       const token = getToken();
       const requestBody = {
         compilations_id: selectedComplianceId,
-        product_id: [...productAdd] // Assuming productAdd is an array containing products
+        product_id: [...productAdd],
       };
       const response = await fetch(
         `${process.env.REACT_APP_URL}/api/v1/product/add-compliance`,
@@ -138,27 +143,17 @@ const AddCompliance = () => {
         }
       );
       const data = await response.json();
-      
+
       if (response.ok) {
         toast.success(data.message);
       } else {
         toast.error(data.message);
       }
-
-      // Reset form or show success message
     } catch (error) {
       console.error("Error submitting data:", error);
-      // Handle error
     }
   };
 
-  const handleRemoveProduct = (indexToRemove) => {
-    setProductAdd(prevProducts => {
-      // Filter out the product at the specified index
-      const updatedProducts = prevProducts.filter((_, index) => index !== indexToRemove);
-      return updatedProducts;
-    });
-  };
   return (
     <div className="w-full bg-gray-100 min-h-screen relative p-2">
       <div className="ml-60 max-w-7xl bg-white rounded-lg p-4 top-12 relative">
@@ -179,10 +174,10 @@ const AddCompliance = () => {
             ))}
           </Select>
           <div className="flex flex-col gap-2">
+            <div className="absolute right-8 top-8 font-bold">Total Price</div>
             {productAdd.map((item, index) => (
-              <div className="flex  gap-4">
+              <div className="flex  gap-4" key={index}>
                 <Select
-                  key={index}
                   placeholder="Select product"
                   onChange={(e) => handleProductChange(index, e.target.value)}
                 >
@@ -200,42 +195,24 @@ const AddCompliance = () => {
                   type="number"
                 />
                 <div className="flex justify-center items-center">
-                 <CloseIcon onClick={() => handleRemoveProduct(index)} cursor="pointer" />
-                 </div>
+                  <CloseIcon
+                    onClick={() => handleRemoveProduct(index)}
+                    cursor="pointer"
+                  />
+                </div>
               </div>
             ))}
+          </div>
+          <div className="flex justify-center items-center">
+            {totalPrice.toFixed(2)} {/* Display the calculated price */}
           </div>
           <div className="flex justify-center items-center">
             <AddIcon onClick={handleAddProduct} />
           </div>
         </div>
-        {additionalProductFields.map((field, index) => (
-          <div className="flex flex-col  gap-4 my-2" key={index}>
-            <Select disabled></Select>
-            <Select
-              placeholder="Select product"
-              onChange={(e) =>
-                handleAdditionalProductChange(e.target.value, index)
-              }
-            >
-              {products.map((product, index) => (
-                <option key={index} value={product._id}>
-                  {product.product_name}
-                </option>
-              ))}
-            </Select>
-            <Input
-              value={field.quantity}
-              onChange={(event) => handleQuantityChange(index, event)}
-              type="number"
-            />
-          </div>
-        ))}
-        {/* <div className="flex justify-center items-center">
-          <AddIcon onClick={handleAddField} />
-        </div> */}
-        <Button margin="2rem" onClick={handleSubmit}>Add Complience</Button>{" "}
-        {/* Add a submit button */}
+        <Button margin="2rem" onClick={handleSubmit}>
+          Add Compliance
+        </Button>{" "}
       </div>
     </div>
   );
