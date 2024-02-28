@@ -65,7 +65,7 @@ const OrdersTableRow = ({data}) => {
       <td class="px-2 py-2 capitalize">{email}</td>
       <td class="px-2 py-2">{formatOrderDate(orderDate)}</td>
       <td class="px-2 py-2">
-        <div className="flex gap-x-2" onClick={() => handlePdfDownload(sessionId)}>
+        <div className="flex cursor-pointer gap-x-2" onClick={() => handlePdfDownload(sessionId)}>
           <svg
             xmlns="http://www.w3.org/2000/svg"
             fill="none"

@@ -174,7 +174,7 @@ const AddCompliance = () => {
             ))}
           </Select>
           <div className="flex flex-col gap-2">
-            <div className="absolute right-8 top-8 font-bold">Total Price</div>
+            <div className="absolute right-20 top-8 font-bold">Total Price</div>
             {productAdd.map((item, index) => (
               <div className="flex  gap-4" key={index}>
                 <Select
@@ -203,7 +203,7 @@ const AddCompliance = () => {
               </div>
             ))}
           </div>
-          <div className="flex justify-center items-center">
+          <div className="absolute top-8 right-8 flex justify-center items-center">
             {totalPrice.toFixed(2)} {/* Display the calculated price */}
           </div>
           <div className="flex justify-center items-center">

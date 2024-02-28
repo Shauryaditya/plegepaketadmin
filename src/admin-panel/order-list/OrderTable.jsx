@@ -67,7 +67,7 @@ export const OrderTable = ({ data }) => {
       <td class="px-2 py-2">{formatOrderDate(orderDate)}</td>
       <td class="px-2 py-2">
         <div
-          className="flex gap-x-2"
+          className="flex cursor-pointer gap-x-2"
           onClick={() => handlePdfDownload(sessionId)}
         >
           <svg
