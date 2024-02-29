@@ -18,7 +18,7 @@ const AddCompliance = () => {
   const [productAdd, setProductAdd] = useState([
     {
       product_id: "",
-      quantity: "",
+      quantity: "1",
     },
   ]);
 
@@ -100,30 +100,68 @@ const AddCompliance = () => {
 
   const handleProductChange = (index, productId) => {
     setIsComplianceDisabled(true);
-    console.log("Index>>>>", index);
-    if (index >= 0 && index < productAdd.length) {
-      productAdd[index].product_id = productId;
+    const updatedProductAdd = [...productAdd];
+    updatedProductAdd[index].product_id = productId;
+  
+    // Calculate the price for 1 quantity of the selected product
+    const product = products.find((product) => product._id === productId);
+    if (product) {
+      updatedProductAdd[index].quantity = "1"; // Set quantity to 1
+      let totalPrice = 0; // Reset total price
+      updatedProductAdd.forEach((item) => {
+        const product = products.find((product) => product._id === item.product_id);
+        if (product) {
+          totalPrice += product.price * parseInt(item.quantity);
+        }
+      });
+      setTotalPrice(totalPrice); // Update total price
     }
+  
+    setProductAdd(updatedProductAdd);
   };
-
+  
+  
   const handleAddProduct = () => {
     const item = {
       product_id: "",
-      quantity: "",
+      quantity: "1",
     };
-
+  
     setProductAdd([...productAdd, item]);
+  
+    // Calculate total price after adding a new product
+    let totalPrice = 0;
+    productAdd.forEach((item) => {
+      const product = products.find((product) => product._id === item.product_id);
+      if (product) {
+        totalPrice +=  product.price * parseInt(item.quantity);
+      }
+    });
+    setTotalPrice(totalPrice);
   };
+  
 
   const handleRemoveProduct = (indexToRemove) => {
     setProductAdd((prevProducts) => {
       const updatedProducts = prevProducts.filter(
         (_, index) => index !== indexToRemove
       );
+  
+      // Calculate total price after removing a product
+      let totalPrice = 0;
+      updatedProducts.forEach((item) => {
+        const product = products.find((product) => product._id === item.product_id);
+        if (product) {
+          totalPrice += product.price * parseInt(item.quantity);
+        }
+      });
+      setTotalPrice(totalPrice);
+  
       return updatedProducts;
     });
   };
 
+  console.log("Total Price >>>",totalPrice)
   const handleSubmit = async () => {
     try {
       const token = getToken();
