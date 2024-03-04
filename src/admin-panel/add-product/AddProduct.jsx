@@ -9,10 +9,6 @@ const AddProduct = () => {
     product_name: "",
     package_size: "",
     unit: "",
-    isPG51: false,
-    isGlove: false,
-    maxNo: "",
-    initialNo: "",
     price: "",
     image: "",
   });
@@ -113,45 +109,11 @@ const AddProduct = () => {
                   className="w-full border rounded-md p-2"
                 >
                   <option value="">--select</option>
-                  <option value="ml">ML</option>
-                  <option value="pieces">Pieces</option>
+                  <option value="Stücke">Stücke</option>
                 </select>
               </div>
             </div>
-         
-
-            {/* Max Number */}
-            <div className="col-span-3 sm:col-span-3 md:col-span-3 lg:col-span-1">
-              <div className="mb-4">
-                <label htmlFor="maxNumber" className="text-left block mb-1">
-                  Max Number
-                </label>
-                <input
-                  type="number"
-                  id="maxNo"
-                  name="maxNo"
-                  value={formData.maxNo}
-                  onChange={handleChange}
-                  className="w-full border rounded-md p-2"
-                />
-              </div>
-            </div>
-            {/* Initial Number */}
-            <div className="col-span-3 sm:col-span-3 md:col-span-3 lg:col-span-1">
-              <div className="mb-4">
-                <label htmlFor="maxNumber" className="text-left block mb-1">
-                  Initial Number
-                </label>
-                <input
-                  type="number"
-                  id="initialNo"
-                  name="initialNo"
-                  value={formData.initialNo}
-                  onChange={handleChange}
-                  className="w-full border rounded-md p-2"
-                />
-              </div>
-            </div>
+   
             {/* Price */}
             <div className="col-span-3 sm:col-span-3 md:col-span-3 lg:col-span-1">
               <div className="mb-4">
