@@ -35,7 +35,7 @@ export const OrderTable = ({ data }) => {
   
       if (pdfPath) {
         // Construct the full URL for the PDF
-        const fullPdfUrl = `${process.env.REACT_APP_URL}/${pdfPath}`;
+        const fullPdfUrl = `${pdfPath}`;
   
         // Open a new tab/window to download the PDF
         window.open(fullPdfUrl, '_blank');
