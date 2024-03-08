@@ -10,8 +10,17 @@ const AddProduct = () => {
     package_size: "",
     unit: "",
     price: "",
-    image: "",
+    image: null, // Initially set to null
   });
+
+  // Handle file change function
+  const handleFileChange = (event) => {
+    const file = event.target.files[0]; // Get the first file from the input
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      image: file,
+    }));
+  };
 
   const handleChange = (event) => {
     const { name, value, type, checked } = event.target;
@@ -23,26 +32,29 @@ const AddProduct = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-  
-    // Assuming formData is defined and contains the form data
-  
-    console.log("Form data:", formData);
-  
+
+    // Create FormData object to handle file upload
+    const formDataToSend = new FormData();
+    formDataToSend.append("product_name", formData.product_name);
+    formDataToSend.append("package_size", formData.package_size);
+    formDataToSend.append("unit", formData.unit);
+    formDataToSend.append("price", formData.price);
+    formDataToSend.append("image", formData.image);
+
     try {
       const response = await fetch(
         `${process.env.REACT_APP_URL}/api/v1/product/add-product`,
         {
           method: "POST",
           headers: {
-            "Content-Type": "application/json",
             Authorization: `Bearer ${token}`,
           },
-          body: JSON.stringify(formData),
+          body: formDataToSend,
         }
       );
-  
+
       const responseData = await response.json();
-  
+
       if (response.ok) {
         toast.success("Successfully added the Product");
       } else {
@@ -52,17 +64,16 @@ const AddProduct = () => {
       toast.error("Error while adding the Product");
     }
   };
-  
+
   return (
     <div className="w-full bg-gray-100 min-h-screen relative p-2">
-      
       <div className="ml-60 max-w-7xl bg-white rounded-lg p-4 top-12 relative">
         <div className="py-4">
           <h1 className="text-xl font-medium text-left">Add Product</h1>
         </div>
         <form onSubmit={handleSubmit}>
           <div className="grid grid-cols-3 gap-4">
-            {/* Product details inputs */}
+                    {/* Product details inputs */}
             {/* Product Name */}
             <div className="col-span-3 sm:col-span-3 md:col-span-3 lg:col-span-1">
               <div className="mb-4">
@@ -113,7 +124,7 @@ const AddProduct = () => {
                 </select>
               </div>
             </div>
-   
+
             {/* Price */}
             <div className="col-span-3 sm:col-span-3 md:col-span-3 lg:col-span-1">
               <div className="mb-4">
@@ -130,19 +141,17 @@ const AddProduct = () => {
                 />
               </div>
             </div>
-            {/* Image Link */}
             <div className="col-span-3 sm:col-span-3 md:col-span-3 lg:col-span-1">
               <div className="mb-4">
-                <label htmlFor="imageLink" className="text-left block mb-1">
-                  Image Link
+                <label htmlFor="imageUpload" className="text-left block mb-1">
+                  Image Upload
                 </label>
                 <input
-                  type="text"
-                  id="imageLink"
+                  type="file"
+                  id="imageUpload"
                   name="image"
-                  value={formData.image}
-                  onChange={handleChange}
-                  placeholder="Enter image URL or drop files here..."
+                  onChange={handleFileChange}
+                  accept="image/*"
                   className="w-full border rounded-md p-2"
                 />
               </div>
