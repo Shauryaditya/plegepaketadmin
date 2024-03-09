@@ -30,14 +30,14 @@ const OrdersTableRow = ({data}) => {
           throw new Error('Network response was not ok');
         }
     
-        const { pdfPath } = await response.json();
+        const { pdfUrl } = await response.json();
     
-        if (pdfPath) {
+        if (pdfUrl) {
           // Construct the full URL for the PDF
-          const fullPdfUrl = `${pdfPath}`;
+          const fullPdfUrl = `${pdfUrl}`;
     
           // Open a new tab/window to download the PDF
-          window.open(fullPdfUrl, '_blank');
+          window.open(pdfUrl, '_blank');
         } else {
           console.error('PDF path not found in the response');
           // Handle the case where pdfPath is not available in the response

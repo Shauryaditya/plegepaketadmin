@@ -12,13 +12,13 @@ const Dashboard = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [pageSize, setPageSize] = useState(5);
   const [totalItems, setTotalItems] = useState(0);
-
+const page = currentPage
   const token = getToken();
  
   useEffect(() => {
     const fetchOrders = async () => {
       try {
-        const url = `${process.env.REACT_APP_URL}/api/v1/order/get-all-orders`;
+        const url = `${process.env.REACT_APP_URL}/api/v1/order/get-all-orders?page=${currentPage}&pageSize=${pageSize}`;
         const response = await fetch(url, {
           method: "GET",
           headers: {
@@ -26,15 +26,17 @@ const Dashboard = () => {
           },
         });
         const data = await response.json();
-        setOrders(data.orderData); // Assuming data is an array of products
-        setTotalItems(data.orderData.length);
+        setOrders(data.orderData);
+        // Assuming the API returns totalItems directly, adjust if necessary
+        setTotalItems(data.totalItems); 
       } catch (error) {
-        console.error("Error fetching products:", error);
+        console.error("Error fetching orders:", error);
       }
     };
-
+  
     fetchOrders();
-  }, []);
+  }, [currentPage, pageSize]); // Add pageSize to dependency array
+  
 
   const fetchProducts = async () => {
     const response = await fetch(

@@ -31,11 +31,11 @@ export const OrderTable = ({ data }) => {
         throw new Error('Network response was not ok');
       }
   
-      const { pdfPath } = await response.json();
+      const { pdfUrl } = await response.json();
   
-      if (pdfPath) {
+      if (pdfUrl) {
         // Construct the full URL for the PDF
-        const fullPdfUrl = `${pdfPath}`;
+        const fullPdfUrl = `${pdfUrl}`;
   
         // Open a new tab/window to download the PDF
         window.open(fullPdfUrl, '_blank');

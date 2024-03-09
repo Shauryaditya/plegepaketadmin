@@ -1,5 +1,8 @@
 import React, { useEffect, useState } from "react";
 import EditModal from "../../components/EditModal";
+import { DeleteIcon } from "@chakra-ui/icons";
+import toast from "react-hot-toast";
+import { getToken } from "../../hook/getToken";
 
 export const ProductTable = ({ data }) => {
   const { product_name, _id, unit, price, maxNo } = data;
@@ -26,6 +29,32 @@ export const ProductTable = ({ data }) => {
     fetchSingleProductData();
   }, [_id]); // Run effect whenever _id changes
   console.log("Single Product >>>", singleproduct);
+
+  const handleDelete = async () => {
+    try {
+      const token= getToken();
+      const response = await fetch(
+        `${process.env.REACT_APP_URL}/api/v1/product/delete/${_id}`,
+        {
+          method: "POST",
+          headers: {
+            Authorization: `Bearer ${token}`,
+          }
+        }
+      );
+        const data  = await response.json();
+      if (!response.ok) {
+        throw new Error("Failed to delete compliance");
+      }else{
+        toast.success(data.message);
+        window.location.reload()
+      }
+
+      // Handle success - you can remove the deleted item from the UI or update the list
+    } catch (error) {
+      console.error("Error deleting compliance:", error);
+    }
+  };
   return (
     <tr class="border-b border-solid border-gray-200 bg-white hover:bg-gray-50 text-[#222222]">
       <td
@@ -45,7 +74,9 @@ export const ProductTable = ({ data }) => {
           <EditModal id={_id} product={singleproduct} />
           )}
   
-
+  <div className="flex justify-center items-center">
+            <DeleteIcon onClick={handleDelete} />
+          </div>
         </div>
       </td>
     </tr>
