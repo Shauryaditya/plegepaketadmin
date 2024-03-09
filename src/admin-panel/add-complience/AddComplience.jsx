@@ -242,7 +242,7 @@ const AddCompliance = () => {
             ))}
           </div>
           <div className="absolute top-8 right-8 flex justify-center items-center">
-            {totalPrice.toFixed(2)} {/* Display the calculated price */}
+          €{totalPrice.toFixed(2)} {/* Display the calculated price */}
           </div>
           <div className="flex justify-center items-center">
             <AddIcon onClick={handleAddProduct} />
